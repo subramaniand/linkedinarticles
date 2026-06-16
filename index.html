@@ -1,122 +1,535 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>CTO AI Adoption Playbook</title>
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-<!-- ✅ LinkedIn Preview (Open Graph) -->
+<title>CTO AI Adoption Playbook</title>
 <meta property="og:title" content="CTO AI Adoption Playbook – From Pilot to Scalable Value">
 <meta property="og:description" content="Interactive AI adoption framework with readiness scoring, ROI modelling, and governance insights for enterprise leaders.">
 <meta property="og:image" content="https://subramaniand.github.io/linkedinarticles/preview.png">
 <meta property="og:url" content="https://subramaniand.github.io/linkedinarticles/">
 <meta property="og:type" content="website">
-
-<style>
-*{box-sizing:border-box;margin:0;padding:0}
-body{font-family:Arial,sans-serif;background:#f8f9fb}
-.container{max-width:900px;margin:auto;padding:20px}
-
-.hero{
-background:#ffffff;
-padding:20px;
-border-radius:10px;
-margin-bottom:20px;
-border-left:4px solid #3266ad;
-}
-
-.title{font-size:26px;font-weight:bold}
-.subtitle{color:#555;margin-top:10px}
-
-.section{
-background:#ffffff;
-padding:20px;
-margin-bottom:20px;
-border-radius:10px;
-}
-
-.slider {
-width:100%;
-margin-top:10px;
-}
-
-.output{
-margin-top:10px;
-font-weight:bold;
-}
-</style>
-
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="CTO AI Adoption Playbook – From Pilot to Scalable Value">
+<meta name="twitter:description" content="Interactive AI adoption framework with readiness scoring, ROI modelling, and governance insights for enterprise leaders.">
+<meta name="twitter:image" content="https://subramaniand.github.io/linkedinarticles/preview.png">
 </head>
-
 <body>
-
-<div class="container">
-
-<div class="hero">
-<div class="title">CTO AI Adoption Playbook</div>
-<div class="subtitle">From Pilot Purgatory to Scalable Value</div>
-</div>
-
-<div class="section">
-<p><b>Interactive AI Readiness</b></p>
-<input type="range" min="0" max="100" value="50" class="slider" id="readiness">
-<div class="output" id="output">Score: 50%</div>
-</div>
-
-<div class="section">
-<p><b>ROI Calculator</b></p>
-
-<label>Employees:
-<input type="range" min="100" max="5000" value="1000" id="emp">
-</label><br><br>
-
-<label>Avg Salary (£k):
-<input type="range" min="30" max="150" value="60" id="salary">
-</label><br><br>
-
-<label>Productivity uplift (%):
-<input type="range" min="5" max="40" value="15" id="uplift">
-</label>
-
-<div class="output" id="roi">Estimated Value: £0M</div>
-</div>
-
-<div class="section">
-<p><b>About this playbook</b></p>
-<p>
-This interactive framework helps CTOs assess AI maturity, estimate ROI, and define a structured path from pilot to enterprise-scale adoption.
-</p>
-</div>
-
-</div>
-
-<script>
-
-// Readiness slider
-document.getElementById("readiness").addEventListener("input", function() {
-    document.getElementById("output").innerText = "Score: " + this.value + "%";
-});
-
-// ROI calculator
-function calculateROI() {
-    let emp = document.getElementById("emp").value;
-    let salary = document.getElementById("salary").value * 1000;
-    let uplift = document.getElementById("uplift").value / 100;
-
-    let value = emp * salary * uplift / 1000000;
-    value = Math.round(value * 10) / 10;
-
-    document.getElementById("roi").innerText = "Estimated Value: £" + value + "M";
-}
-
-["emp","salary","uplift"].forEach(id=>{
-    document.getElementById(id).addEventListener("input", calculateROI);
-});
-
-calculateROI();
-
+<style>
+:root{--font-sans:Arial,Helvetica,sans-serif;--color-background-primary:#ffffff;--color-background-secondary:#f4f6f8;--color-text-primary:#111827;--color-text-secondary:#374151;--color-text-tertiary:#6b7280;--color-border-secondary:#cfd8e3;--color-border-tertiary:#e5e7eb;--border-radius-md:8px;--border-radius-lg:14px;}
+body{background:#fafbfc;padding:0 16px;}
+@media (max-width: 768px){.article{max-width:100%;padding:1rem 0}.pillars,.cloud-tool-grid,.governance-grid,.framework-steps,.metric-grid,.roi-output{grid-template-columns:1fr !important}.slider-row{flex-direction:column;align-items:flex-start}.slider-label,.slider-val,.rs-label,.rs-pct{width:auto}.uc-row{flex-direction:column;gap:.35rem}}
+  
+*{box-sizing:border-box;margin:0;padding:0}  
+body{font-family:var(--font-sans)}  
+.article{max-width:680px;margin:0 auto;padding:2rem 0}  
+.hero{border-left:3px solid #3266ad;padding:1.5rem 1.5rem;background:var(--color-background-secondary);border-radius:0 var(--border-radius-lg) var(--border-radius-lg) 0;margin-bottom:2.5rem}  
+.hero-label{font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.5rem}  
+.hero-title{font-size:26px;font-weight:500;color:var(--color-text-primary);line-height:1.25;margin-bottom:.75rem}  
+.hero-sub{font-size:15px;color:var(--color-text-secondary);line-height:1.6}  
+.byline{display:flex;align-items:center;gap:12px;margin-bottom:2.5rem;padding-bottom:1.5rem;border-bottom:.5px solid var(--color-border-tertiary)}  
+.avatar{width:44px;height:44px;border-radius:50%;background:#B5D4F4;display:flex;align-items:center;justify-content:center;font-weight:500;font-size:13px;color:#0C447C;flex-shrink:0}  
+.byline-text{font-size:13px;color:var(--color-text-secondary);line-height:1.5}  
+.byline-name{font-weight:500;color:var(--color-text-primary);font-size:14px}  
+.section{margin-bottom:3rem}  
+.section-label{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:.5rem}  
+.section-title{font-size:20px;font-weight:500;color:var(--color-text-primary);margin-bottom:1rem;line-height:1.3}  
+.prose{font-size:15px;color:var(--color-text-secondary);line-height:1.7;margin-bottom:1rem}  
+.callout{border-left:2px solid #1D9E75;padding:.75rem 1rem;background:var(--color-background-secondary);border-radius:0 var(--border-radius-md) var(--border-radius-md) 0;font-size:14px;color:var(--color-text-secondary);line-height:1.6;margin:1.5rem 0;font-style:italic}  
+.metric-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin:1.5rem 0}  
+.metric-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:1rem;text-align:center}  
+.metric-num{font-size:26px;font-weight:500;color:var(--color-text-primary)}  
+.metric-lbl{font-size:12px;color:var(--color-text-tertiary);margin-top:4px;line-height:1.4}  
+.pillars{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:1.5rem 0}  
+.pillar{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem}  
+.pillar-icon{font-size:20px;margin-bottom:8px;color:#185FA5}  
+.pillar-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}  
+.pillar-desc{font-size:13px;color:var(--color-text-secondary);line-height:1.5}  
+.cloud-tabs{display:flex;gap:8px;margin-bottom:1rem;flex-wrap:wrap}  
+.cloud-tab{padding:6px 14px;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-secondary);font-size:13px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary);transition:all .15s}  
+.cloud-tab.active{background:#E6F1FB;border-color:#185FA5;color:#0C447C;font-weight:500}  
+.cloud-panel{display:none;background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:1.25rem;border:.5px solid var(--color-border-tertiary)}  
+.cloud-panel.active{display:block}  
+.cloud-tool-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:8px;margin-top:.75rem}  
+.cloud-tool{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.6rem .8rem;font-size:13px}  
+.cloud-tool-name{font-weight:500;color:var(--color-text-primary)}  
+.cloud-tool-desc{color:var(--color-text-tertiary);font-size:12px;margin-top:2px}  
+.demo-box{border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-lg);padding:1.5rem;margin:1.5rem 0;background:var(--color-background-primary)}  
+.demo-title{font-size:14px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}  
+.demo-subtitle{font-size:12px;color:var(--color-text-tertiary);margin-bottom:1.25rem}  
+.slider-row{display:flex;align-items:center;gap:12px;margin-bottom:1rem}  
+.slider-label{font-size:13px;color:var(--color-text-secondary);width:130px;flex-shrink:0}  
+.slider-val{font-size:13px;font-weight:500;color:var(--color-text-primary);width:60px;text-align:right;flex-shrink:0}  
+.roi-output{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:1.25rem}  
+.roi-card{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem;text-align:center}  
+.roi-num{font-size:20px;font-weight:500;color:var(--color-text-primary)}  
+.roi-lbl{font-size:11px;color:var(--color-text-tertiary);margin-top:3px}  
+.usecase-tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:1rem}  
+.uc-tab{padding:5px 12px;border-radius:var(--border-radius-md);border:.5px solid var(--color-border-secondary);font-size:12px;cursor:pointer;background:var(--color-background-primary);color:var(--color-text-secondary)}  
+.uc-tab.active{background:#E1F5EE;border-color:#0F6E56;color:#085041;font-weight:500}  
+.uc-panel{display:none}  
+.uc-panel.active{display:block}  
+.uc-row{display:flex;gap:1rem;align-items:flex-start;margin-bottom:.75rem}  
+.uc-badge{background:#9FE1CB;color:#04342C;font-size:11px;padding:3px 8px;border-radius:var(--border-radius-md);white-space:nowrap;flex-shrink:0;font-weight:500}  
+.uc-text{font-size:13px;color:var(--color-text-secondary);line-height:1.5}  
+.uc-impact{font-weight:500;color:var(--color-text-primary)}  
+.radar-wrap{position:relative;height:280px;margin:1.5rem 0}  
+.readiness-sliders{margin-top:1rem}  
+.rs-row{display:flex;align-items:center;gap:10px;margin-bottom:.6rem}  
+.rs-label{font-size:12px;color:var(--color-text-secondary);width:140px;flex-shrink:0}  
+.rs-bar-bg{flex:1;height:6px;background:var(--color-background-secondary);border-radius:3px;overflow:hidden}  
+.rs-bar{height:6px;border-radius:3px;background:#378ADD;transition:width .3s}  
+.rs-pct{font-size:12px;color:var(--color-text-tertiary);width:32px;text-align:right;flex-shrink:0}  
+.framework-steps{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin:1.5rem 0}  
+.fs-step{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.75rem;text-align:center}  
+.fs-num{font-size:20px;font-weight:500;color:#185FA5}  
+.fs-title{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-top:4px;line-height:1.3}  
+.fs-desc{font-size:11px;color:var(--color-text-tertiary);margin-top:4px;line-height:1.4}  
+.divider{border:none;border-top:.5px solid var(--color-border-tertiary);margin:2.5rem 0}  
+.tag-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:1.5rem}  
+.tag{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:4px 10px;font-size:12px;color:var(--color-text-secondary)}  
+.ask-btn{display:inline-flex;align-items:center;gap:6px;padding:8px 16px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:13px;color:var(--color-text-primary);cursor:pointer;background:var(--color-background-primary);margin-top:1rem}  
+.ask-btn:hover{background:var(--color-background-secondary)}  
+.governance-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin:1.5rem 0}  
+.gov-card{border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:.9rem}  
+.gov-icon{font-size:18px;color:#533AB7;margin-bottom:8px}  
+.gov-title{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}  
+.gov-items{font-size:12px;color:var(--color-text-secondary);line-height:1.6}  
+.prompt-demo{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:1.25rem;margin:1rem 0}  
+.prompt-row{display:flex;gap:10px;align-items:flex-start;margin-bottom:1rem}  
+.prompt-label{font-size:11px;font-weight:500;width:70px;flex-shrink:0;padding-top:3px}  
+.prompt-label.user{color:#185FA5}  
+.prompt-label.ai{color:#0F6E56}  
+.prompt-bubble{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:.6rem .9rem;font-size:13px;color:var(--color-text-secondary);line-height:1.5;flex:1}  
+.improve-bar{height:4px;background:var(--color-background-secondary);border-radius:2px;overflow:hidden;margin-top:8px}  
+.improve-fill{height:4px;border-radius:2px;background:#3266ad;transition:width 1.2s}  
+</style>  
+<div class="article">  
+<div class="hero">  
+  <div class="hero-label">CTO perspective · AI transformation</div>  
+  <div class="hero-title">The CTO's AI Adoption Playbook: From Pilot Purgatory to Scalable Value</div>  
+  <div class="hero-sub">A vendor-neutral framework for enterprise AI transformation — covering strategy, tooling, governance, and the metrics that actually matter.</div>  
+</div>  
+<div class="byline">  
+  <div class="avatar">CTO</div>  
+  <div>  
+    <div class="byline-name">Technology Leadership Perspective</div>  
+    <div class="byline-text">Enterprise AI Strategy · 12 min read · June 2026</div>  
+  </div>  
+</div>  
+<div class="section">  
+  <div class="section-label">The state of play</div>  
+  <div class="section-title">Most organisations are stuck in pilot purgatory</div>  
+  <div class="prose">After three years of generative AI hype, the uncomfortable truth is that the vast majority of enterprise AI initiatives never leave the proof-of-concept phase. McKinsey's 2025 State of AI report found that while 78% of companies have deployed AI in at least one business function, fewer than 20% have scaled it to meaningful impact.</div>  
+  <div class="prose">The bottleneck is almost never the technology. It's the absence of a structured adoption framework — one that aligns AI investment to business strategy, respects organisational readiness, and treats governance as a first-class concern rather than an afterthought.</div>  
+  <div class="callout">"Scaling AI is fundamentally a change management problem dressed in a technology costume." — Recurring pattern across high-performing AI transformations</div>  
+  <div class="metric-grid">  
+    <div class="metric-card">  
+      <div class="metric-num">78%</div>  
+      <div class="metric-lbl">of firms have at least one AI deployment</div>  
+    </div>  
+    <div class="metric-card">  
+      <div class="metric-num">&lt;20%</div>  
+      <div class="metric-lbl">have scaled AI to measurable business impact</div>  
+    </div>  
+    <div class="metric-card">  
+      <div class="metric-num">3.7×</div>  
+      <div class="metric-lbl">productivity uplift in high-maturity AI teams vs. average</div>  
+    </div>  
+  </div>  
+</div>  
+<hr class="divider">  
+<div class="section">  
+  <div class="section-label">Foundations</div>  
+  <div class="section-title">The five readiness drivers no CTO can skip</div>  
+  <div class="prose">Before selecting a single tool or model, every CTO needs to assess their organisation across five dimensions. These aren't sequential — they're interdependent, and weakness in any one will constrain the others.</div>  
+  <div class="pillars">  
+    <div class="pillar">  
+      <div class="pillar-icon"><i class="ti ti-target" aria-hidden="true"></i></div>  
+      <div class="pillar-title">1. Business strategy</div>  
+      <div class="pillar-desc">AI must solve problems tied to revenue, cost, or risk — not showcase technology. Define the top 2–3 business problems and manage AI as a portfolio with clear KPIs, not a collection of experiments.</div>  
+    </div>  
+    <div class="pillar">  
+      <div class="pillar-icon"><i class="ti ti-database" aria-hidden="true"></i></div>  
+      <div class="pillar-title">2. Technology & data</div>  
+      <div class="pillar-desc">Data quality is the single biggest predictor of AI success. Audit your data estate before selecting models. Garbage in, hallucination out. Align infrastructure choices to build, buy, or extend decisions.</div>  
+    </div>  
+    <div class="pillar">  
+      <div class="pillar-icon"><i class="ti ti-chart-dots" aria-hidden="true"></i></div>  
+      <div class="pillar-title">3. AI strategy & experience</div>  
+      <div class="pillar-desc">Start small, learn fast, and measure what matters. The compound of many small wins is more valuable than one big bet. Build diverse, cross-functional teams — domain experts + engineers + ethicists.</div>  
+    </div>  
+    <div class="pillar">  
+      <div class="pillar-icon"><i class="ti ti-users" aria-hidden="true"></i></div>  
+      <div class="pillar-title">4. Organisation & culture</div>  
+      <div class="pillar-desc">AI adoption fails without executive sponsorship and a learning culture. The HR leader's role is as critical as the CTO's here — tailored upskilling and change management are non-negotiable at scale.</div>  
+    </div>  
+    <div class="pillar">  
+      <div class="pillar-icon"><i class="ti ti-shield-check" aria-hidden="true"></i></div>  
+      <div class="pillar-title">5. AI governance</div>  
+      <div class="pillar-desc">Data governance, AI governance, and regulatory compliance are three distinct but interlinked pillars. Build a unified governance model with a Chief AI Ethics Officer and centralised AI inventory from day one.</div>  
+    </div>  
+    <div class="pillar">  
+      <div class="pillar-icon"><i class="ti ti-refresh" aria-hidden="true"></i></div>  
+      <div class="pillar-title">Continuous loop</div>  
+      <div class="pillar-desc">These five drivers form a continuous loop — not a waterfall. Strategy informs data, which shapes model choice, which reveals new organisational needs, which tightens governance. Revisit quarterly.</div>  
+    </div>  
+  </div>  
+</div>  
+<div class="section">  
+  <div class="section-label">Interactive: AI readiness assessment</div>  
+  <div class="demo-title">Rate your organisation across the five readiness dimensions</div>  
+  <div class="demo-subtitle">Adjust the sliders to reflect your current maturity. The radar reflects where to invest first.</div>  
+  <div class="readiness-sliders" id="rs-sliders">  
+    <div class="rs-row"><span class="rs-label">Business strategy</span><input type="range" min="0" max="100" value="45" style="flex:1" data-dim="0"><div class="rs-bar-bg"><div class="rs-bar" id="rsb0" style="width:45%"></div></div><span class="rs-pct" id="rsp0">45%</span></div>  
+    <div class="rs-row"><span class="rs-label">Technology & data</span><input type="range" min="0" max="100" value="35" style="flex:1" data-dim="1"><div class="rs-bar-bg"><div class="rs-bar" id="rsb1" style="width:35%"></div></div><span class="rs-pct" id="rsp1">35%</span></div>  
+    <div class="rs-row"><span class="rs-label">AI strategy & XP</span><input type="range" min="0" max="100" value="30" style="flex:1" data-dim="2"><div class="rs-bar-bg"><div class="rs-bar" id="rsb2" style="width:30%"></div></div><span class="rs-pct" id="rsp2">30%</span></div>  
+    <div class="rs-row"><span class="rs-label">Organisation & culture</span><input type="range" min="0" max="100" value="55" style="flex:1" data-dim="3"><div class="rs-bar-bg"><div class="rs-bar" id="rsb3" style="width:55%"></div></div><span class="rs-pct" id="rsp3">55%</span></div>  
+    <div class="rs-row"><span class="rs-label">AI governance</span><input type="range" min="0" max="100" value="25" style="flex:1" data-dim="4"><div class="rs-bar-bg"><div class="rs-bar" id="rsb4" style="width:25%"></div></div><span class="rs-pct" id="rsp4">25%</span></div>  
+  </div>  
+  <div id="rs-advice" style="margin-top:1rem;padding:.75rem 1rem;background:var(--color-background-secondary);border-radius:var(--border-radius-md);font-size:13px;color:var(--color-text-secondary);line-height:1.6"></div>  
+  <div style="position:relative;height:240px;margin-top:1rem"><canvas id="radarChart" role="img" aria-label="Radar chart showing AI readiness across five dimensions">Radar chart of AI readiness dimensions.</canvas></div>  
+  <button class="ask-btn" onclick="sendPrompt('Give me a detailed 90-day AI readiness improvement plan based on weak governance and data strategy scores')">Get my 90-day improvement plan ↗</button>  
+</div>  
+<hr class="divider">  
+<div class="section">  
+  <div class="section-label">The multi-cloud landscape</div>  
+  <div class="section-title">Choosing your AI platform stack — a vendor-neutral view</div>  
+  <div class="prose">The most sophisticated AI programmes are multi-cloud and increasingly multi-model. Vendor lock-in is the single biggest strategic risk in enterprise AI. A mature CTO treats cloud AI platforms the way a CFO treats banking relationships: diversify, understand switching costs, and always maintain optionality.</div>  
+  <div class="cloud-tabs">  
+    <button class="cloud-tab active" onclick="showCloud(this,'ms')">Microsoft Azure</button>  
+    <button class="cloud-tab" onclick="showCloud(this,'aws')">AWS</button>  
+    <button class="cloud-tab" onclick="showCloud(this,'gcp')">Google Cloud</button>  
+    <button class="cloud-tab" onclick="showCloud(this,'oss')">Open Source</button>  
+  </div>  
+  <div class="cloud-panel active" id="cp-ms">  
+    <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:.75rem;line-height:1.5">Strongest for enterprises already in the Microsoft 365 / Azure ecosystem. Copilot products reduce adoption friction; Azure OpenAI Service provides enterprise-grade GPT-4 access with data residency controls. Best for document-heavy, meeting-heavy workflows.</div>  
+    <div class="cloud-tool-grid">  
+      <div class="cloud-tool"><div class="cloud-tool-name">Azure OpenAI Service</div><div class="cloud-tool-desc">GPT-4o, o3, DALL-E via enterprise API with private endpoints</div></div>  
+      <div class="cloud-tool"><div class="cloud-tool-name">Microsoft Copilot Studio</div><div class="cloud-tool-desc">No-code agent builder; connects to M365 Graph data</div></div>  
+      <div class="cloud-tool"><div class="cloud-tool-name">Azure AI Foundry</div><div class="cloud-tool-desc">Model catalogue: GPT, Llama, Phi, Mistral — one control plane</div></div>  
+      <div class="cloud-tool"><div class="cloud-tool-name">Azure AI Search + RAG</div><div class="cloud-tool-desc">Grounded generation over proprietary document corpora</div></div>  
+    </div>  
+  </div>  
+  <div class="cloud-panel" id="cp-aws">  
+    <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:.75rem;line-height:1.5">AWS Bedrock is the most model-agnostic foundation model platform. For teams already running workloads on AWS, Bedrock's managed inference with fine-tuning and agents provides deep integration with existing IAM, VPC, and S3 data estates. SageMaker remains the gold standard for custom MLOps.</div>  
+    <div class="cloud-tool-grid">  
+      <div class="cloud-tool"><div class="cloud-tool-name">Amazon Bedrock</div><div class="cloud-tool-desc">Claude, Llama 3, Titan, Mistral, Cohere — pay-per-token</div></div>  
+      <div class="cloud-tool"><div class="cloud-tool-name">Amazon Q Business</div><div class="cloud-tool-desc">Enterprise Copilot equivalent: RAG over S3, Confluence, Jira</div></div>  
+      <div class="cloud-tool"><div class="cloud-tool-name">SageMaker + MLflow</div><div class="cloud-tool-desc">End-to-end MLOps: training, deployment, drift monitoring</div></div>  
+      <div class="cloud-tool"><div class="cloud-tool-name">AWS Trainium / Inferentia</div><div class="cloud-tool-desc">Custom AI chips: 40–50% cost reduction vs GPU for inference</div></div>  
+    </div>  
+  </div>  
+  <div class="cloud-panel" id="cp-gcp">  
+    <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:.75rem;line-height:1.5">Google Cloud leads in multimodal AI (Gemini) and has the most mature vector search infrastructure via Vertex AI. For organisations with existing BigQuery data estates or those with strong multimodal use cases (vision, audio, code), GCP is often the strongest technical choice.</div>  
+    <div class="cloud-tool-grid">  
+      <div class="cloud-tool"><div class="cloud-tool-name">Vertex AI + Gemini 2.0</div><div class="cloud-tool-desc">1M-token context, multimodal; best-in-class for code + vision</div></div>  
+      <div class="cloud-tool"><div class="cloud-tool-name">BigQuery ML</div><div class="cloud-tool-desc">Run ML inference directly inside BigQuery — no data movement</div></div>  
+      <div class="cloud-tool"><div class="cloud-tool-name">Vertex AI Agent Builder</div><div class="cloud-tool-desc">Grounded agents with Google Search and enterprise data</div></div>  
+      <div class="cloud-tool"><div class="cloud-tool-name">Looker + Gemini</div><div class="cloud-tool-desc">Natural language BI: ask questions of your data warehouse</div></div>  
+    </div>  
+  </div>  
+  <div class="cloud-panel" id="cp-oss">  
+    <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:.75rem;line-height:1.5">Open-source models have closed the capability gap dramatically. For organisations with data sovereignty requirements, cost sensitivity, or deep customisation needs, self-hosted open-source models often represent the best risk-adjusted choice — especially when combined with cloud-managed infrastructure.</div>  
+    <div class="cloud-tool-grid">  
+      <div class="cloud-tool"><div class="cloud-tool-name">Llama 3.x / Mistral</div><div class="cloud-tool-desc">Meta & Mistral AI models; deployable on any infra, zero data egress</div></div>  
+      <div class="cloud-tool"><div class="cloud-tool-name">LangChain / LlamaIndex</div><div class="cloud-tool-desc">Orchestration frameworks for RAG, agents, and multi-step reasoning</div></div>  
+      <div class="cloud-tool"><div class="cloud-tool-name">Hugging Face + vLLM</div><div class="cloud-tool-desc">Model hub + high-throughput serving: 10–24× faster inference</div></div>  
+      <div class="cloud-tool"><div class="cloud-tool-name">MLflow + DVC</div><div class="cloud-tool-desc">Experiment tracking, model registry, and data versioning</div></div>  
+    </div>  
+  </div>  
+</div>  
+<hr class="divider">  
+<div class="section">  
+  <div class="section-label">Interactive: ROI modeller</div>  
+  <div class="section-title">Where does AI create the most value in your organisation?</div>  
+  <div class="prose">The three AI opportunity archetypes aren't equal in ROI. Use this model to estimate the value of each for your context.</div>  
+  <div class="demo-box">  
+    <div class="demo-title">AI value calculator</div>  
+    <div class="demo-subtitle">Adjust parameters for your organisation to see estimated annual impact</div>  
+    <div class="slider-row"><span class="slider-label">Employees using AI</span><input type="range" min="100" max="10000" value="1000" step="100" id="emp-count" style="flex:1"><span class="slider-val" id="emp-out">1,000</span></div>  
+    <div class="slider-row"><span class="slider-label">Avg. annual salary (£k)</span><input type="range" min="30" max="150" value="65" step="5" id="salary" style="flex:1"><span class="slider-val" id="sal-out">£65k</span></div>  
+    <div class="slider-row"><span class="slider-label">Productivity uplift %</span><input type="range" min="5" max="40" value="15" id="uplift" style="flex:1"><span class="slider-val" id="up-out">15%</span></div>  
+    <div class="slider-row"><span class="slider-label">Process automation %</span><input type="range" min="0" max="60" value="20" id="proc" style="flex:1"><span class="slider-val" id="proc-out">20%</span></div>  
+    <div class="roi-output">  
+      <div class="roi-card"><div class="roi-num" id="roi-prod">£9.8M</div><div class="roi-lbl">Productivity value</div></div>  
+      <div class="roi-card"><div class="roi-num" id="roi-proc">£2.0M</div><div class="roi-lbl">Process savings</div></div>  
+      <div class="roi-card"><div class="roi-num" id="roi-total">£11.8M</div><div class="roi-lbl">Total annual value</div></div>  
+    </div>  
+    <div style="font-size:11px;color:var(--color-text-tertiary);margin-top:.75rem">Estimates based on McKinsey productivity benchmarks. Actual results depend on adoption rate, implementation quality, and role mix.</div>  
+    <button class="ask-btn" onclick="sendPrompt('How do I build a business case for AI investment for a 1000-person organisation with a £65k average salary?')">Build my AI business case ↗</button>  
+  </div>  
+</div>  
+<hr class="divider">  
+<div class="section">  
+  <div class="section-label">Interactive: use case explorer</div>  
+  <div class="section-title">The highest-impact AI use cases by business function</div>  
+  <div class="prose">Not all AI use cases are equal. The table below — drawn from patterns across hundreds of enterprise AI deployments — shows the highest-ROI starting points by function. Select your domain.</div>  
+  <div class="usecase-tabs">  
+    <button class="uc-tab active" onclick="showUC(this,'ops')">Operations</button>  
+    <button class="uc-tab" onclick="showUC(this,'fin')">Finance</button>  
+    <button class="uc-tab" onclick="showUC(this,'cx')">Customer</button>  
+    <button class="uc-tab" onclick="showUC(this,'hr')">People</button>  
+    <button class="uc-tab" onclick="showUC(this,'tech')">Engineering</button>  
+  </div>  
+  <div class="uc-panel active" id="ucp-ops">  
+    <div class="uc-row"><span class="uc-badge">High ROI</span><div class="uc-text"><span class="uc-impact">Intelligent document processing.</span> Invoice extraction, contract review, compliance checks — Bedrock Document Intelligence, Azure Doc Intelligence, or open-source Unstructured.io. Typical outcome: 70–85% reduction in manual processing time.</div></div>  
+    <div class="uc-row"><span class="uc-badge">High ROI</span><div class="uc-text"><span class="uc-impact">Predictive maintenance.</span> Sensor data + time-series ML models (SageMaker, Vertex AI, or on-prem) to predict equipment failure. Reduces unplanned downtime by 25–40% in manufacturing and utilities.</div></div>  
+    <div class="uc-row"><span class="uc-badge">Medium ROI</span><div class="uc-text"><span class="uc-impact">Supply chain optimisation.</span> Demand forecasting with LLMs + classical ML. Google's Vertex AI Forecast or Amazon Forecast. 10–20% inventory reduction with maintained service levels.</div></div>  
+  </div>  
+  <div class="uc-panel" id="ucp-fin">  
+    <div class="uc-row"><span class="uc-badge">High ROI</span><div class="uc-text"><span class="uc-impact">Fraud detection & anomaly detection.</span> Real-time ML inference on transaction streams. AWS Fraud Detector, Vertex AI, or custom PyTorch models. 30–60% improvement in detection rates with lower false positives.</div></div>  
+    <div class="uc-row"><span class="uc-badge">High ROI</span><div class="uc-text"><span class="uc-impact">Financial close acceleration.</span> AI-assisted reconciliation, variance analysis, and management commentary generation via RAG over ERP data. 40–60% reduction in close cycle time.</div></div>  
+    <div class="uc-row"><span class="uc-badge">Medium ROI</span><div class="uc-text"><span class="uc-impact">Regulatory reporting.</span> LLMs to draft XBRL reports, PRA/FCA submissions, and ESG disclosures with audit trail. Significant compliance cost reduction in regulated industries.</div></div>  
+  </div>  
+  <div class="uc-panel" id="ucp-cx">  
+    <div class="uc-row"><span class="uc-badge">High ROI</span><div class="uc-text"><span class="uc-impact">AI-powered support agents.</span> RAG-grounded agents (Amazon Q, Azure Copilot Studio, or Langchain + Llama) that resolve 60–80% of tier-1 queries without human escalation. Customer satisfaction typically improves as wait times drop.</div></div>  
+    <div class="uc-row"><span class="uc-badge">High ROI</span><div class="uc-text"><span class="uc-impact">Sentiment analysis at scale.</span> Real-time analysis of calls, chats, and reviews using Azure Language, AWS Comprehend, or open-source BERT variants. Powers proactive churn prevention.</div></div>  
+    <div class="uc-row"><span class="uc-badge">Medium ROI</span><div class="uc-text"><span class="uc-impact">Personalisation engines.</span> Recommendation systems using collaborative filtering + LLMs for explanation. 15–25% uplift in conversion and average order value in e-commerce contexts.</div></div>  
+  </div>  
+  <div class="uc-panel" id="ucp-hr">  
+    <div class="uc-row"><span class="uc-badge">Medium ROI</span><div class="uc-text"><span class="uc-impact">CV screening & talent matching.</span> Embedding models to match candidates to roles at scale — but proceed carefully. Bias risk is high; rigorous fairness testing (using tools like Amazon SageMaker Clarify) is mandatory.</div></div>  
+    <div class="uc-row"><span class="uc-badge">High ROI</span><div class="uc-text"><span class="uc-impact">HR knowledge assistant.</span> RAG over HR policies, benefits docs, and onboarding materials. Reduces HR query volume by 40–60% and improves employee experience significantly.</div></div>  
+    <div class="uc-row"><span class="uc-badge">Medium ROI</span><div class="uc-text"><span class="uc-impact">Learning & development personalisation.</span> Adaptive learning paths generated by LLMs based on role, skill gaps, and career goals. Measurable improvement in training completion rates.</div></div>  
+  </div>  
+  <div class="uc-panel" id="ucp-tech">  
+    <div class="uc-row"><span class="uc-badge">High ROI</span><div class="uc-text"><span class="uc-impact">AI-assisted code review & generation.</span> GitHub Copilot, Amazon CodeWhisperer, or Gemini Code Assist. Empirically proven: 20–55% faster task completion, 25–40% reduction in bugs in controlled studies.</div></div>  
+    <div class="uc-row"><span class="uc-badge">High ROI</span><div class="uc-text"><span class="uc-impact">Automated test generation.</span> LLMs generate unit tests from function signatures. Dramatically increases test coverage without proportional engineering time investment.</div></div>  
+    <div class="uc-row"><span class="uc-badge">Medium ROI</span><div class="uc-text"><span class="uc-impact">Infrastructure & ops intelligence.</span> AIOps platforms (Dynatrace, Datadog with LLM layer) for anomaly detection, root cause analysis, and auto-remediation. Reduces mean time to resolution by 50–70%.</div></div>  
+  </div>  
+</div>  
+<hr class="divider">  
+<div class="section">  
+  <div class="section-label">Prompt engineering 101</div>  
+  <div class="section-title">Why prompt quality is an enterprise strategic asset</div>  
+  <div class="prose">The quality of your prompts determines the quality of your AI outputs. This is not a trivial observation — organisations that invest in prompt engineering libraries, standardised templates, and prompt governance are consistently outperforming those that treat prompting as an ad hoc activity.</div>  
+  <div class="prompt-demo">  
+    <div class="prompt-row">  
+      <span class="prompt-label user">Poor</span>  
+      <div class="prompt-bubble">Summarise the contract.</div>  
+    </div>  
+    <div class="prompt-row">  
+      <span class="prompt-label user">Better</span>  
+      <div class="prompt-bubble">You are a legal analyst. Summarise this supplier contract for a CFO audience. Focus on: payment terms, liability caps, termination clauses, and any unusual obligations. Use bullet points. Flag any clauses that deviate from our standard terms [attach standard].</div>  
+    </div>  
+    <div style="font-size:12px;color:var(--color-text-tertiary);margin-top:.5rem;line-height:1.6">The four elements of an effective business prompt: <strong style="color:var(--color-text-primary)">Goal</strong> (what output), <strong style="color:var(--color-text-primary)">Context</strong> (why + who), <strong style="color:var(--color-text-primary)">Source</strong> (which data), <strong style="color:var(--color-text-primary)">Expectations</strong> (format + constraints).</div>  
+  </div>  
+  <div style="margin-top:1.25rem">  
+    <div style="font-size:13px;color:var(--color-text-secondary);margin-bottom:.75rem">Quality improvement from structured prompting:</div>  
+    <div style="font-size:12px;color:var(--color-text-tertiary);margin-bottom:4px">Output relevance</div>  
+    <div class="improve-bar"><div class="improve-fill" id="bar1" style="width:0%;background:#378ADD"></div></div>  
+    <div style="font-size:12px;color:var(--color-text-tertiary);margin-top:.5rem;margin-bottom:4px">Factual accuracy</div>  
+    <div class="improve-bar"><div class="improve-fill" id="bar2" style="width:0%;background:#1D9E75"></div></div>  
+    <div style="font-size:12px;color:var(--color-text-tertiary);margin-top:.5rem;margin-bottom:4px">Task completion rate</div>  
+    <div class="improve-bar"><div class="improve-fill" id="bar3" style="width:0%;background:#533AB7"></div></div>  
+    <div style="display:flex;gap:1.5rem;margin-top:.5rem;font-size:11px;color:var(--color-text-tertiary)">  
+      <span>Relevance: +<span id="b1v">0</span>%</span>  
+      <span>Accuracy: +<span id="b2v">0</span>%</span>  
+      <span>Completion: +<span id="b3v">0</span>%</span>  
+    </div>  
+  </div>  
+  <button class="ask-btn" onclick="sendPrompt('Show me a prompt engineering template library for enterprise finance use cases')">Get enterprise prompt templates ↗</button>  
+</div>  
+<hr class="divider">  
+<div class="section">  
+  <div class="section-label">The responsible AI imperative</div>  
+  <div class="section-title">Governance isn't a compliance checkbox — it's a competitive moat</div>  
+  <div class="prose">The organisations that will win the long AI game are those that treat responsible AI as a strategic differentiator, not a regulatory burden. Trust is the ultimate enterprise AI asset. Customers, regulators, and employees are all watching how you deploy AI — and the reputational cost of getting it wrong dwarfs the short-term velocity gained by cutting governance corners.</div>  
+  <div class="governance-grid">  
+    <div class="gov-card">  
+      <div class="gov-icon"><i class="ti ti-scale" aria-hidden="true"></i></div>  
+      <div class="gov-title">Fairness</div>  
+      <div class="gov-items">Bias audits at training and inference. Diverse test sets. Regular disparity analysis across demographic groups.</div>  
+    </div>  
+    <div class="gov-card">  
+      <div class="gov-icon"><i class="ti ti-shield" aria-hidden="true"></i></div>  
+      <div class="gov-title">Privacy & security</div>  
+      <div class="gov-items">Data minimisation. Private endpoints for model inference. Zero-trust architecture. PII detection pre-ingestion.</div>  
+    </div>  
+    <div class="gov-card">  
+      <div class="gov-icon"><i class="ti ti-eye" aria-hidden="true"></i></div>  
+      <div class="gov-title">Transparency</div>  
+      <div class="gov-items">Explainability requirements by use case risk. Model cards. Human-readable audit trails for high-stakes decisions.</div>  
+    </div>  
+    <div class="gov-card">  
+      <div class="gov-icon"><i class="ti ti-user-check" aria-hidden="true"></i></div>  
+      <div class="gov-title">Human oversight</div>  
+      <div class="gov-items">Human-in-the-loop for high-stakes decisions. Clear escalation paths. Appeal mechanisms for AI-driven outcomes.</div>  
+    </div>  
+    <div class="gov-card">  
+      <div class="gov-icon"><i class="ti ti-list-check" aria-hidden="true"></i></div>  
+      <div class="gov-title">Accountability</div>  
+      <div class="gov-items">Centralised AI inventory. Named owners per system. AI ethics committee with board-level reporting line.</div>  
+    </div>  
+    <div class="gov-card">  
+      <div class="gov-icon"><i class="ti ti-refresh" aria-hidden="true"></i></div>  
+      <div class="gov-title">Continuous monitoring</div>  
+      <div class="gov-items">Model drift detection. Regular performance reviews. Dynamic governance that adapts as regulation evolves (EU AI Act).</div>  
+    </div>  
+  </div>  
+  <div class="callout">The phased approach that works: AI Strategy → AI Plan → AI Ready → Govern AI → Secure AI → Manage AI — with responsible AI principles running as a continuous layer underneath every phase, not bolted on at the end.</div>  
+</div>  
+<hr class="divider">  
+<div class="section">  
+  <div class="section-label">The adoption roadmap</div>  
+  <div class="section-title">From "Becoming Frontier" to scalable value — the four-phase model</div>  
+  <div class="prose">The highest-performing AI organisations consistently follow a structured adoption arc. The mistake most CTOs make is jumping to phase 3 or 4 without the foundations in place.</div>  
+  <div class="framework-steps">  
+    <div class="fs-step">  
+      <div class="fs-num">1</div>  
+      <div class="fs-title">Educate & inspire</div>  
+      <div class="fs-desc">Business and tech execs aligned on "art of the possible". Executive AI literacy programme. Internal AI day.</div>  
+    </div>  
+    <div class="fs-step">  
+      <div class="fs-num">2</div>  
+      <div class="fs-title">Assess readiness</div>  
+      <div class="fs-desc">Score across the five drivers. Gap analysis. Data estate audit. Build vs. buy decision framework.</div>  
+    </div>  
+    <div class="fs-step">  
+      <div class="fs-num">3</div>  
+      <div class="fs-title">Map the journey</div>  
+      <div class="fs-desc">Operating model for the AI era. Use case prioritisation matrix. Platform architecture decisions. KPI framework.</div>  
+    </div>  
+    <div class="fs-step">  
+      <div class="fs-num">4</div>  
+      <div class="fs-title">Build agentic future</div>  
+      <div class="fs-desc">Discovery workshops. Top 3–5 use case pilots. Agent orchestration. Scale governance. Measure and iterate.</div>  
+    </div>  
+  </div>  
+  <div class="prose">The key insight: organisations that get to repeatable, scalable AI value treat it as an operating model transformation — not a technology project. The CTO's job is to build the infrastructure of trust, data, and capability that enables the entire organisation to participate in the AI economy.</div>  
+</div>  
+<hr class="divider">  
+<div class="section">  
+  <div class="section-label">CTO checklist</div>  
+  <div class="section-title">The 10 questions every CTO must answer before scaling AI</div>  
+  <div id="checklist"></div>  
+  <button class="ask-btn" onclick="sendPrompt('Which of these 10 CTO AI questions would be hardest for a 500-person financial services firm to answer, and why?')">Explore these for my sector ↗</button>  
+</div>  
+<div class="tag-row">  
+  <span class="tag">#AIStrategy</span>  
+  <span class="tag">#DigitalTransformation</span>  
+  <span class="tag">#GenerativeAI</span>  
+  <span class="tag">#CTOInsights</span>  
+  <span class="tag">#EnterpriseAI</span>  
+  <span class="tag">#ResponsibleAI</span>  
+  <span class="tag">#MLOps</span>  
+  <span class="tag">#AWSBedrock</span>  
+  <span class="tag">#VertexAI</span>  
+</div>  
+</div>  
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>  
+<script>  
+const dims=['Business strategy','Technology & data','AI strategy & XP','Org & culture','AI governance'];  
+const vals=[45,35,30,55,25];  
+let radarChart;  
+function initRadar(){  
+  const ctx=document.getElementById('radarChart').getContext('2d');  
+  radarChart=new Chart(ctx,{  
+    type:'radar',  
+    data:{  
+      labels:dims,  
+      datasets:[{label:'Your maturity',data:[...vals],backgroundColor:'rgba(50,102,173,0.15)',borderColor:'#3266ad',borderWidth:2,pointBackgroundColor:'#3266ad',pointRadius:4}]  
+    },  
+    options:{  
+      responsive:true,maintainAspectRatio:false,  
+      scales:{r:{min:0,max:100,ticks:{display:false},grid:{color:'rgba(128,128,128,0.15)'},pointLabels:{font:{size:11},color:'#888'}}},  
+      plugins:{legend:{display:false}}  
+    }  
+  });  
+}  
+function updateAdvice(){  
+  const minIdx=vals.indexOf(Math.min(...vals));  
+  const labels=['business strategy alignment','data infrastructure and quality','AI expertise and experimentation practices','organisational change management','AI governance frameworks'];  
+  const adv=document.getElementById('rs-advice');  
+  adv.textContent='Priority focus: your weakest area is '+labels[minIdx]+' ('+vals[minIdx]+'%). Investing here will unlock the most downstream value before scaling AI across the organisation.';  
+}  
+document.querySelectorAll('#rs-sliders input[type=range]').forEach(inp=>{  
+  inp.addEventListener('input',function(){  
+    const i=parseInt(this.dataset.dim);  
+    vals[i]=parseInt(this.value);  
+    document.getElementById('rsb'+i).style.width=vals[i]+'%';  
+    document.getElementById('rsp'+i).textContent=vals[i]+'%';  
+    if(radarChart){radarChart.data.datasets[0].data=[...vals];radarChart.update();}  
+    updateAdvice();  
+  });  
+});  
+function showCloud(btn,id){  
+  document.querySelectorAll('.cloud-tab').forEach(t=>t.classList.remove('active'));  
+  document.querySelectorAll('.cloud-panel').forEach(p=>p.classList.remove('active'));  
+  btn.classList.add('active');  
+  document.getElementById('cp-'+id).classList.add('active');  
+}  
+function showUC(btn,id){  
+  document.querySelectorAll('.uc-tab').forEach(t=>t.classList.remove('active'));  
+  document.querySelectorAll('.uc-panel').forEach(p=>p.classList.remove('active'));  
+  btn.classList.add('active');  
+  document.getElementById('ucp-'+id).classList.add('active');  
+}  
+function calcROI(){  
+  const emp=parseInt(document.getElementById('emp-count').value);  
+  const sal=parseInt(document.getElementById('salary').value)*1000;  
+  const up=parseInt(document.getElementById('uplift').value)/100;  
+  const proc=parseInt(document.getElementById('proc').value)/100;  
+  const prod=Math.round(emp*sal*up/1000000*10)/10;  
+  const pa=Math.round(emp*sal*proc*0.15/1000000*10)/10;  
+  const tot=Math.round((prod+pa)*10)/10;  
+  document.getElementById('roi-prod').textContent='£'+prod+'M';  
+  document.getElementById('roi-proc').textContent='£'+pa+'M';  
+  document.getElementById('roi-total').textContent='£'+tot+'M';  
+  document.getElementById('emp-out').textContent=emp.toLocaleString();  
+  document.getElementById('sal-out').textContent='£'+parseInt(document.getElementById('salary').value)+'k';  
+  document.getElementById('up-out').textContent=parseInt(document.getElementById('uplift').value)+'%';  
+  document.getElementById('proc-out').textContent=parseInt(document.getElementById('proc').value)+'%';  
+}  
+['emp-count','salary','uplift','proc'].forEach(id=>{  
+  document.getElementById(id).addEventListener('input',calcROI);  
+});  
+const qs=[  
+  'What are the top 3 business problems AI must solve — and how will we measure success?',  
+  'What is the state of our data estate — quality, accessibility, and governance?',  
+  'Have we defined our build/buy/extend decision criteria for AI tooling?',  
+  'Do we have a centralised AI inventory with named owners for every system?',  
+  'How are we managing vendor lock-in risk across our AI platform choices?',  
+  'What bias testing protocols exist before any AI system goes into production?',  
+  'Do we have human-in-the-loop mechanisms for high-stakes AI decisions?',  
+  'How are we upskilling the organisation — not just engineers, but all functions?',  
+  'What is our model for tracking AI ROI beyond activity metrics?',  
+  'Are we ready for the EU AI Act, and how do we stay ahead of regulation?'  
+];  
+const cl=document.getElementById('checklist');  
+qs.forEach((q,i)=>{  
+  const row=document.createElement('div');  
+  row.style.cssText='display:flex;gap:10px;align-items:flex-start;padding:.6rem 0;border-bottom:.5px solid var(--color-border-tertiary);cursor:pointer';  
+  const cb=document.createElement('div');  
+  cb.style.cssText='width:16px;height:16px;border:.5px solid var(--color-border-secondary);border-radius:3px;flex-shrink:0;margin-top:2px;display:flex;align-items:center;justify-content:center;transition:all .15s';  
+  cb.dataset.checked='0';  
+  const txt=document.createElement('div');  
+  txt.style.cssText='font-size:13px;color:var(--color-text-secondary);line-height:1.5';  
+  txt.innerHTML='<span style="font-weight:500;color:var(--color-text-primary)">'+(i+1)+'.</span> '+q;  
+  row.appendChild(cb);row.appendChild(txt);  
+  row.addEventListener('click',()=>{  
+    const c=cb.dataset.checked==='0';  
+    cb.dataset.checked=c?'1':'0';  
+    cb.style.background=c?'#3266ad':'';  
+    cb.style.borderColor=c?'#3266ad':'';  
+    cb.innerHTML=c?'<i class="ti ti-check" style="font-size:10px;color:#fff" aria-hidden="true"></i>':'';  
+    txt.style.color=c?'var(--color-text-tertiary)':'var(--color-text-secondary)';  
+    txt.style.textDecoration=c?'line-through':'none';  
+  });  
+  cl.appendChild(row);  
+});  
+function sendPrompt(msg){ console.log('Prompt requested:', msg); }
+setTimeout(()=>{  
+  if (typeof Chart !== 'undefined') { initRadar(); }
+  updateAdvice();  
+  const b1=document.getElementById('bar1');  
+  const b2=document.getElementById('bar2');  
+  const b3=document.getElementById('bar3');  
+  if(b1){b1.style.width='72%';document.getElementById('b1v').textContent='72';}  
+  if(b2){b2.style.width='58%';document.getElementById('b2v').textContent='58';}  
+  if(b3){b3.style.width='81%';document.getElementById('b3v').textContent='81';}  
+  calcROI();
+},600);  
 </script>
-
 </body>
 </html>
-``
