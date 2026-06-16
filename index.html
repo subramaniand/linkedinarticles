@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>CTO AI Adoption Playbook</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<!-- ✅ LinkedIn Preview (Open Graph) -->
+<meta property="og:title" content="CTO AI Adoption Playbook – From Pilot to Scalable Value">
+<meta property="og:description" content="Interactive AI adoption framework with readiness scoring, ROI modelling, and governance insights for enterprise leaders.">
+<meta property="og:image" content="https://subramaniand.github.io/linkedinarticles/preview.png">
+<meta property="og:url" content="https://subramaniand.github.io/linkedinarticles/">
+<meta property="og:type" content="website">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:Arial,sans-serif;background:#f8f9fb}
+.container{max-width:900px;margin:auto;padding:20px}
+
+.hero{
+background:#ffffff;
+padding:20px;
+border-radius:10px;
+margin-bottom:20px;
+border-left:4px solid #3266ad;
+}
+
+.title{font-size:26px;font-weight:bold}
+.subtitle{color:#555;margin-top:10px}
+
+.section{
+background:#ffffff;
+padding:20px;
+margin-bottom:20px;
+border-radius:10px;
+}
+
+.slider {
+width:100%;
+margin-top:10px;
+}
+
+.output{
+margin-top:10px;
+font-weight:bold;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="hero">
+<div class="title">CTO AI Adoption Playbook</div>
+<div class="subtitle">From Pilot Purgatory to Scalable Value</div>
+</div>
+
+<div class="section">
+<p><b>Interactive AI Readiness</b></p>
+<input type="range" min="0" max="100" value="50" class="slider" id="readiness">
+<div class="output" id="output">Score: 50%</div>
+</div>
+
+<div class="section">
+<p><b>ROI Calculator</b></p>
+
+<label>Employees:
+<input type="range" min="100" max="5000" value="1000" id="emp">
+</label><br><br>
+
+<label>Avg Salary (£k):
+<input type="range" min="30" max="150" value="60" id="salary">
+</label><br><br>
+
+<label>Productivity uplift (%):
+<input type="range" min="5" max="40" value="15" id="uplift">
+</label>
+
+<div class="output" id="roi">Estimated Value: £0M</div>
+</div>
+
+<div class="section">
+<p><b>About this playbook</b></p>
+<p>
+This interactive framework helps CTOs assess AI maturity, estimate ROI, and define a structured path from pilot to enterprise-scale adoption.
+</p>
+</div>
+
+</div>
+
+<script>
+
+// Readiness slider
+document.getElementById("readiness").addEventListener("input", function() {
+    document.getElementById("output").innerText = "Score: " + this.value + "%";
+});
+
+// ROI calculator
+function calculateROI() {
+    let emp = document.getElementById("emp").value;
+    let salary = document.getElementById("salary").value * 1000;
+    let uplift = document.getElementById("uplift").value / 100;
+
+    let value = emp * salary * uplift / 1000000;
+    value = Math.round(value * 10) / 10;
+
+    document.getElementById("roi").innerText = "Estimated Value: £" + value + "M";
+}
+
+["emp","salary","uplift"].forEach(id=>{
+    document.getElementById(id).addEventListener("input", calculateROI);
+});
+
+calculateROI();
+
+</script>
+
+</body>
+</html>
+``
