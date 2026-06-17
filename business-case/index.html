@@ -1,1 +1,324 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AI Business Case Builder</title>
 
+<meta property="og:title" content="AI Business Case Builder – Interactive ROI Modeller">
+<meta property="og:description" content="Interactive enterprise AI business case tool with ROI, cost modelling, and governance insights.">
+<meta property="og:image" content="https://subramaniand.github.io/linkedinarticles/preview.png">
+<meta property="og:url" content="https://subramaniand.github.io/linkedinarticles/business-case/">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+
+<style>
+:root{--font-sans:Arial,Helvetica,sans-serif;--color-background-primary:#ffffff;--color-background-secondary:#f4f6f8;--color-text-primary:#111827;--color-text-secondary:#374151;--color-text-tertiary:#6b7280;--color-border-secondary:#cfd8e3;--color-border-tertiary:#e5e7eb;--border-radius-md:8px;--border-radius-lg:14px;}
+body{font-family:Arial;background:#fafbfc;margin:0;padding:20px}
+</style>
+</head>
+<body>
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+.bc{padding:1rem 0;font-family:var(--font-sans)}
+.section-hdr{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:1rem;padding-bottom:.5rem;border-bottom:.5px solid var(--color-border-tertiary)}
+.metric-row{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.5rem}
+.mc{background:var(--color-background-secondary);border-radius:var(--border-radius-md);padding:.9rem;text-align:center}
+.mc-num{font-size:22px;font-weight:500;color:var(--color-text-primary)}
+.mc-lbl{font-size:11px;color:var(--color-text-tertiary);margin-top:3px;line-height:1.4}
+.mc-delta{font-size:11px;color:#0F6E56;margin-top:2px}
+.ctrl-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-bottom:1.5rem}
+.ctrl-group{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem}
+.ctrl-title{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:.75rem}
+.sl-row{display:flex;align-items:center;gap:8px;margin-bottom:.6rem}
+.sl-lbl{font-size:12px;color:var(--color-text-secondary);width:110px;flex-shrink:0;line-height:1.3}
+.sl-val{font-size:12px;font-weight:500;color:var(--color-text-primary);width:52px;text-align:right;flex-shrink:0}
+.chart-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem;margin-bottom:1.5rem}
+.chart-box{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem}
+.chart-title{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:.5rem}
+.legend{display:flex;gap:12px;flex-wrap:wrap;margin-bottom:.5rem}
+.leg-item{display:flex;align-items:center;gap:4px;font-size:11px;color:var(--color-text-secondary)}
+.leg-sq{width:9px;height:9px;border-radius:2px;flex-shrink:0}
+.waterfall-wrap{background:var(--color-background-primary);border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:1rem;margin-bottom:1.5rem}
+.assumptions{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:1rem;margin-bottom:1.5rem}
+.ass-title{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:.6rem}
+.ass-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+.ass-item{background:var(--color-background-primary);border-radius:var(--border-radius-md);padding:.6rem .8rem}
+.ass-key{font-size:11px;color:var(--color-text-tertiary);margin-bottom:2px}
+.ass-val{font-size:12px;color:var(--color-text-primary);font-weight:500}
+.risk-row{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:1.5rem}
+.risk-card{border:.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:.9rem}
+.risk-icon{font-size:16px;margin-bottom:6px}
+.risk-title{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.risk-desc{font-size:11px;color:var(--color-text-secondary);line-height:1.5}
+.risk-score{display:inline-block;font-size:10px;padding:2px 7px;border-radius:var(--border-radius-md);margin-top:4px;font-weight:500}
+.score-low{background:#E1F5EE;color:#085041}
+.score-med{background:#FAEEDA;color:#633806}
+.score-high{background:#FCEBEB;color:#791F1F}
+.phase-track{display:flex;gap:0;margin-bottom:1.5rem}
+.phase{flex:1;padding:.75rem;text-align:center;border:.5px solid var(--color-border-tertiary);background:var(--color-background-primary)}
+.phase:first-child{border-radius:var(--border-radius-md) 0 0 var(--border-radius-md)}
+.phase:last-child{border-radius:0 var(--border-radius-md) var(--border-radius-md) 0}
+.phase-num{font-size:11px;color:var(--color-text-tertiary)}
+.phase-title{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-top:2px}
+.phase-cost{font-size:11px;color:#185FA5;margin-top:2px}
+.phase-month{font-size:10px;color:var(--color-text-tertiary);margin-top:1px}
+.ask-btn{display:inline-flex;align-items:center;gap:6px;padding:7px 14px;border:.5px solid var(--color-border-secondary);border-radius:var(--border-radius-md);font-size:12px;color:var(--color-text-primary);cursor:pointer;background:var(--color-background-primary);margin-top:.75rem}
+.ask-btn:hover{background:var(--color-background-secondary)}
+</style>
+
+<h2 class="sr-only" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)">Interactive AI business case builder for a 1,000-person organisation with £65k average salary</h2>
+
+<div class="bc">
+
+<div class="section-hdr">Assumptions — adjust to your context</div>
+
+<div class="ctrl-grid">
+  <div class="ctrl-group">
+    <div class="ctrl-title">Organisation parameters</div>
+    <div class="sl-row"><span class="sl-lbl">Employees</span><input type="range" min="200" max="5000" value="1000" step="50" id="emp" style="flex:1"><span class="sl-val" id="emp-v">1,000</span></div>
+    <div class="sl-row"><span class="sl-lbl">Avg salary (£k)</span><input type="range" min="30" max="120" value="65" step="5" id="sal" style="flex:1"><span class="sl-val" id="sal-v">£65k</span></div>
+    <div class="sl-row"><span class="sl-lbl">% using AI tools</span><input type="range" min="10" max="100" value="60" step="5" id="adopt" style="flex:1"><span class="sl-val" id="adopt-v">60%</span></div>
+    <div class="sl-row"><span class="sl-lbl">Productivity uplift</span><input type="range" min="5" max="35" value="15" id="uplift" style="flex:1"><span class="sl-val" id="uplift-v">15%</span></div>
+  </div>
+  <div class="ctrl-group">
+    <div class="ctrl-title">Investment parameters</div>
+    <div class="sl-row"><span class="sl-lbl">Licence cost / user / yr</span><input type="range" min="200" max="3000" value="600" step="50" id="lic" style="flex:1"><span class="sl-val" id="lic-v">£600</span></div>
+    <div class="sl-row"><span class="sl-lbl">Impl. cost (£k total)</span><input type="range" min="100" max="2000" value="400" step="50" id="impl" style="flex:1"><span class="sl-val" id="impl-v">£400k</span></div>
+    <div class="sl-row"><span class="sl-lbl">Training cost / user</span><input type="range" min="50" max="1000" value="200" step="50" id="train" style="flex:1"><span class="sl-val" id="train-v">£200</span></div>
+    <div class="sl-row"><span class="sl-lbl">Process automation %</span><input type="range" min="0" max="50" value="20" id="proc" style="flex:1"><span class="sl-val" id="proc-v">20%</span></div>
+  </div>
+</div>
+
+<div class="section-hdr">Summary financials</div>
+<div class="metric-row">
+  <div class="mc"><div class="mc-num" id="m-benefit">£0</div><div class="mc-lbl">Annual gross benefit</div><div class="mc-delta" id="m-benefit-d"></div></div>
+  <div class="mc"><div class="mc-num" id="m-cost">£0</div><div class="mc-lbl">Year 1 total investment</div></div>
+  <div class="mc"><div class="mc-num" id="m-roi">0%</div><div class="mc-lbl">3-year ROI</div><div class="mc-delta" id="m-roi-d"></div></div>
+  <div class="mc"><div class="mc-num" id="m-payback">0 mo</div><div class="mc-lbl">Payback period</div></div>
+</div>
+
+<div class="section-hdr">3-year benefit breakdown</div>
+<div class="chart-row">
+  <div class="chart-box">
+    <div class="chart-title">Annual value vs. cost (£M)</div>
+    <div class="legend">
+      <span class="leg-item"><span class="leg-sq" style="background:#378ADD"></span>Productivity value</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#1D9E75"></span>Process savings</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#E24B4A;"></span>Total cost</span>
+    </div>
+    <div style="position:relative;height:200px"><canvas id="barChart" role="img" aria-label="Bar chart comparing annual AI benefit versus cost over 3 years">3-year AI benefit and cost comparison.</canvas></div>
+  </div>
+  <div class="chart-box">
+    <div class="chart-title">Cumulative net value (£M)</div>
+    <div class="legend">
+      <span class="leg-item"><span class="leg-sq" style="background:#534AB7"></span>Cumulative net</span>
+      <span class="leg-item"><span class="leg-sq" style="background:#E24B4A"></span>Break-even</span>
+    </div>
+    <div style="position:relative;height:200px"><canvas id="lineChart" role="img" aria-label="Line chart showing cumulative net AI value and break-even point over 3 years">Cumulative net value over 3 years with break-even point.</canvas></div>
+  </div>
+</div>
+
+<div class="waterfall-wrap">
+  <div class="chart-title" style="margin-bottom:.5rem">Year 1 value waterfall (£M)</div>
+  <div class="legend" style="margin-bottom:.5rem">
+    <span class="leg-item"><span class="leg-sq" style="background:#1D9E75"></span>Benefit</span>
+    <span class="leg-item"><span class="leg-sq" style="background:#E24B4A"></span>Cost / deduction</span>
+    <span class="leg-item"><span class="leg-sq" style="background:#534AB7"></span>Net</span>
+  </div>
+  <div style="position:relative;height:160px"><canvas id="wfChart" role="img" aria-label="Waterfall chart showing Year 1 AI value build-up from benefits and costs to net position">Year 1 AI value waterfall.</canvas></div>
+</div>
+
+<div class="section-hdr">Underlying assumptions (audit-ready)</div>
+<div class="assumptions">
+  <div class="ass-grid" id="ass-grid"></div>
+</div>
+
+<div class="section-hdr">Phased investment structure</div>
+<div class="phase-track">
+  <div class="phase"><div class="phase-num">Phase 1</div><div class="phase-title">Foundation</div><div class="phase-cost" id="ph1c">£0</div><div class="phase-month">Months 1–4</div></div>
+  <div class="phase"><div class="phase-num">Phase 2</div><div class="phase-title">Pilot</div><div class="phase-cost" id="ph2c">£0</div><div class="phase-month">Months 3–8</div></div>
+  <div class="phase"><div class="phase-num">Phase 3</div><div class="phase-title">Scale</div><div class="phase-cost" id="ph3c">£0</div><div class="phase-month">Months 7–18</div></div>
+  <div class="phase"><div class="phase-num">Phase 4</div><div class="phase-title">Optimise</div><div class="phase-cost" id="ph4c">Ongoing</div><div class="phase-month">Month 12+</div></div>
+</div>
+
+<div class="section-hdr">Risk register</div>
+<div class="risk-row">
+  <div class="risk-card">
+    <div class="risk-icon" style="color:#185FA5"><i class="ti ti-users" aria-hidden="true"></i></div>
+    <div class="risk-title">Adoption shortfall</div>
+    <div class="risk-desc">Target users don't engage with AI tools. Mitigate with change management, champions programme, and role-specific training.</div>
+    <span class="risk-score score-high">High likelihood</span>
+  </div>
+  <div class="risk-card">
+    <div class="risk-icon" style="color:#854F0B"><i class="ti ti-database" aria-hidden="true"></i></div>
+    <div class="risk-title">Data quality gaps</div>
+    <div class="risk-desc">Poor data estate limits model accuracy. Mitigate with pre-investment data audit and a parallel data quality programme.</div>
+    <span class="risk-score score-med">Medium likelihood</span>
+  </div>
+  <div class="risk-card">
+    <div class="risk-icon" style="color:#A32D2D"><i class="ti ti-shield" aria-hidden="true"></i></div>
+    <div class="risk-title">Security & compliance</div>
+    <div class="risk-desc">Data leakage or regulatory breach via AI systems. Mitigate with private endpoints, PII scanning, and governance framework.</div>
+    <span class="risk-score score-med">Medium likelihood</span>
+  </div>
+  <div class="risk-card">
+    <div class="risk-icon" style="color:#085041"><i class="ti ti-coin" aria-hidden="true"></i></div>
+    <div class="risk-title">Cost overrun</div>
+    <div class="risk-desc">Token costs and infrastructure scale beyond projections. Mitigate with usage monitoring, budget alerts, and pre-paid tiers once stable.</div>
+    <span class="risk-score score-low">Lower likelihood</span>
+  </div>
+  <div class="risk-card">
+    <div class="risk-icon" style="color:#534AB7"><i class="ti ti-brain" aria-hidden="true"></i></div>
+    <div class="risk-title">Hallucination & quality</div>
+    <div class="risk-desc">AI outputs are incorrect or misleading. Mitigate with RAG grounding, human-in-the-loop review, and output testing frameworks.</div>
+    <span class="risk-score score-med">Medium likelihood</span>
+  </div>
+  <div class="risk-card">
+    <div class="risk-icon" style="color:#712B13"><i class="ti ti-lock" aria-hidden="true"></i></div>
+    <div class="risk-title">Vendor lock-in</div>
+    <div class="risk-desc">Over-dependence on a single platform creates switching risk. Mitigate with open standards (MCP, OpenAI API spec) and multi-vendor contracts.</div>
+    <span class="risk-score score-low">Lower likelihood</span>
+  </div>
+</div>
+
+<button class="ask-btn" onclick="sendPrompt('What should go in the executive summary slide of an AI business case for a CFO audience?')">Draft my CFO executive summary ↗</button>
+<button class="ask-btn" style="margin-left:8px" onclick="sendPrompt('What KPIs should I track to demonstrate AI ROI to the board in the first 12 months?')">Get KPI framework ↗</button>
+
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<script>
+let barC,lineC,wfC;
+
+function fmt(n){
+  if(Math.abs(n)>=1)return(n<0?'-£':'£')+Math.abs(n).toFixed(1)+'M';
+  return(n<0?'-£':'£')+(Math.abs(n)*1000).toFixed(0)+'k';
+}
+function fmtM(n){return(n<0?'-£':'£')+Math.abs(n).toFixed(2)+'M';}
+
+function calc(){
+  const emp=parseInt(document.getElementById('emp').value);
+  const sal=parseInt(document.getElementById('sal').value)*1000;
+  const adopt=parseInt(document.getElementById('adopt').value)/100;
+  const uplift=parseInt(document.getElementById('uplift').value)/100;
+  const licPU=parseInt(document.getElementById('lic').value);
+  const impl=parseInt(document.getElementById('impl').value)*1000;
+  const trainPU=parseInt(document.getElementById('train').value);
+  const proc=parseInt(document.getElementById('proc').value)/100;
+
+  document.getElementById('emp-v').textContent=emp.toLocaleString();
+  document.getElementById('sal-v').textContent='£'+parseInt(document.getElementById('sal').value)+'k';
+  document.getElementById('adopt-v').textContent=Math.round(adopt*100)+'%';
+  document.getElementById('uplift-v').textContent=Math.round(uplift*100)+'%';
+  document.getElementById('lic-v').textContent='£'+licPU;
+  document.getElementById('impl-v').textContent='£'+parseInt(document.getElementById('impl').value)+'k';
+  document.getElementById('train-v').textContent='£'+trainPU;
+  document.getElementById('proc-v').textContent=Math.round(proc*100)+'%';
+
+  const users=Math.round(emp*adopt);
+  const prodBenefit=emp*sal*adopt*uplift;
+  const procBenefit=emp*sal*proc*0.12;
+  const annualBenefit=prodBenefit+procBenefit;
+  const licCostAnn=users*licPU;
+  const trainCost=users*trainPU;
+  const implCost=impl;
+  const yr1Cost=licCostAnn+trainCost+implCost;
+  const yr2Cost=licCostAnn*1.05;
+  const yr3Cost=licCostAnn*1.1;
+  const yr1Net=annualBenefit*0.6-yr1Cost;
+  const yr2Net=annualBenefit*0.9-yr2Cost;
+  const yr3Net=annualBenefit-yr3Cost;
+  const totalBenefit=(annualBenefit*0.6)+(annualBenefit*0.9)+annualBenefit;
+  const totalCost=yr1Cost+yr2Cost+yr3Cost;
+  const roi3yr=Math.round(((totalBenefit-totalCost)/totalCost)*100);
+  const pbMonths=yr1Net>0?Math.round(yr1Cost/(annualBenefit*0.6/12)):Math.round((yr1Cost+Math.abs(yr1Net))/(annualBenefit*0.9/12)+12);
+
+  const toM=v=>Math.round(v/100000)/10;
+
+  document.getElementById('m-benefit').textContent=fmt(toM(annualBenefit));
+  document.getElementById('m-benefit-d').textContent='at full adoption';
+  document.getElementById('m-cost').textContent=fmt(toM(yr1Cost));
+  document.getElementById('m-roi').textContent=roi3yr+'%';
+  document.getElementById('m-roi-d').textContent='vs. cost of capital';
+  document.getElementById('m-payback').textContent=pbMonths+' mo';
+
+  document.getElementById('ph1c').textContent='£'+Math.round(impl/1000)+'k';
+  document.getElementById('ph2c').textContent='£'+Math.round(users*0.2*licPU/1000)+'k/yr';
+  document.getElementById('ph3c').textContent='£'+Math.round(licCostAnn/1000)+'k/yr';
+
+  const assData=[
+    {k:'AI users',v:users.toLocaleString()},
+    {k:'Prod. value / user / yr',v:'£'+Math.round(sal*uplift).toLocaleString()},
+    {k:'Benefit ramp (Y1)',v:'60% of full run-rate'},
+    {k:'Benefit ramp (Y2)',v:'90% of full run-rate'},
+    {k:'Annual licence cost',v:'£'+Math.round(licCostAnn/1000)+'k'},
+    {k:'One-off impl. cost',v:'£'+Math.round((impl+trainCost)/1000)+'k'},
+    {k:'Ongoing cost Y2',v:'£'+Math.round(yr2Cost/1000)+'k'},
+    {k:'Benchmark source',v:'McKinsey 2025 AI index'},
+    {k:'Discount rate',v:'8% (cost of capital)'}
+  ];
+  const ag=document.getElementById('ass-grid');
+  ag.innerHTML='';
+  assData.forEach(a=>{
+    ag.innerHTML+=`<div class="ass-item"><div class="ass-key">${a.k}</div><div class="ass-val">${a.v}</div></div>`;
+  });
+
+  const b1=toM(prodBenefit*0.6),b2=toM(procBenefit*0.6),c1=toM(yr1Cost);
+  const b1y2=toM(prodBenefit*0.9),b2y2=toM(procBenefit*0.9),c2=toM(yr2Cost);
+  const b1y3=toM(prodBenefit),b2y3=toM(procBenefit),c3=toM(yr3Cost);
+
+  if(barC)barC.destroy();
+  barC=new Chart(document.getElementById('barChart').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['Year 1','Year 2','Year 3'],
+      datasets:[
+        {label:'Productivity',data:[b1,b1y2,b1y3],backgroundColor:'#378ADD'},
+        {label:'Process savings',data:[b2,b2y2,b2y3],backgroundColor:'#1D9E75'},
+        {label:'Cost',data:[c1,c2,c3],backgroundColor:'#E24B4A'}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{ticks:{callback:v=>'£'+v+'M',font:{size:10}},grid:{color:'rgba(128,128,128,0.1)'}}}}
+  });
+
+  const cum1=toM(yr1Net);
+  const cum2=toM(yr1Net+yr2Net);
+  const cum3=toM(yr1Net+yr2Net+yr3Net);
+
+  if(lineC)lineC.destroy();
+  lineC=new Chart(document.getElementById('lineChart').getContext('2d'),{
+    type:'line',
+    data:{
+      labels:['Start','Year 1','Year 2','Year 3'],
+      datasets:[
+        {label:'Cumulative net',data:[0,cum1,cum2,cum3],borderColor:'#534AB7',backgroundColor:'rgba(83,74,183,0.08)',borderWidth:2,pointRadius:4,pointBackgroundColor:'#534AB7',fill:true,tension:.3},
+        {label:'Break-even',data:[0,0,0,0],borderColor:'#E24B4A',borderWidth:1,borderDash:[4,4],pointRadius:0}
+      ]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false}},scales:{x:{grid:{display:false},ticks:{font:{size:11}}},y:{ticks:{callback:v=>'£'+v+'M',font:{size:10}},grid:{color:'rgba(128,128,128,0.1)'}}}}
+  });
+
+  const wfVals=[toM(prodBenefit*0.6),toM(procBenefit*0.6),-toM(licCostAnn),-toM(impl+trainCost),toM(yr1Net)];
+  const wfColors=['#1D9E75','#1D9E75','#E24B4A','#E24B4A','#534AB7'];
+  if(wfC)wfC.destroy();
+  wfC=new Chart(document.getElementById('wfChart').getContext('2d'),{
+    type:'bar',
+    data:{
+      labels:['Productivity\nbenefit','Process\nsavings','Licence\ncosts','Impl &\ntraining','Y1 net\nposition'],
+      datasets:[{data:wfVals,backgroundColor:wfColors,borderRadius:3}]
+    },
+    options:{responsive:true,maintainAspectRatio:false,plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>'£'+ctx.raw.toFixed(2)+'M'}}},scales:{x:{grid:{display:false},ticks:{font:{size:10}}},y:{ticks:{callback:v=>'£'+v+'M',font:{size:10}},grid:{color:'rgba(128,128,128,0.1)'}}}}
+  });
+}
+
+['emp','sal','adopt','uplift','lic','impl','train','proc'].forEach(id=>{
+  document.getElementById(id).addEventListener('input',calc);
+});
+
+setTimeout(calc,400);
+</script>
+
+</body>
+</html>
